@@ -47,6 +47,7 @@
 (= (str \a) "a")
 
 ; ★書籍と異なる
+; clojure 1.3で変わったらしい。プリミティブ型を使うようになった
 (= 1 1.0)
 
 (= 1 2)
@@ -154,9 +155,9 @@ mentors
   (str "Use the force," "Luke."))
 
 ;★docはInstareplでは使えない？
-;(doc force-it)
+(clojure.repl/doc force-it)
 
-;(doc str)
+(clojure.repl/doc str)
 
 (def line [[0 0] [10 20]])
 
@@ -196,6 +197,8 @@ line
 
 (defn twice-count [w] (* 2 (count w)))
 
+(#(* 2 %1 %2) 1 2)
+
 (twice-count "Lando")
 
 (map twice-count people)
@@ -208,8 +211,30 @@ line
 
 (apply + v)
 
+(apply + (list 1 2 3))
+
 (apply max v)
 
 (filter odd? v)
 
 (filter #(< % 3) v)
+
+; 演習
+(defn big [st n] (> (count st) n))
+
+
+
+(defn collective-type [c]
+  (cond
+   (list? c) :list
+   (vector? c) :vector
+   (map? c) map))
+
+(if '() "a" "b")
+
+(if nil "a" "b")
+
+(list nil)
+
+(if (first '()) "a" "b")
+(= :list (collective-type (list 1 2)))

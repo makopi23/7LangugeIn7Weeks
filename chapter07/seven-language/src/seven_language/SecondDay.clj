@@ -53,6 +53,9 @@
 
 (reduce * [1 2 3 4 5])
 
+;apply だと (+ 1 2 3 4)
+;reduce だと ((+1 (+ 2 (+ 3 4))))
+
 (sort [3 1 2 4])
 
 (defn abs [x] (if (< x 0) (- x) x))
@@ -81,7 +84,8 @@
 
 (take 5 (iterate dec 0))
 
-(defn fib-pair [[a b]] [b (+ a b)])
+; +'とするとBigIntになるのでオーバーフローしない
+(defn fib-pair [[a b]] [b (+' a b)])
 
 (fib-pair [3 5])
 
@@ -90,7 +94,9 @@
        first
        (iterate fib-pair [1 1])))
 
-(nth (map first (iterate fib-pair [1 1])) 50)
+(nth (map first (iterate fib-pair [1 1])) 500)
+
+(class 1)
 
 (defn factorial [n] (apply * (take n (iterate inc 1))))
 
